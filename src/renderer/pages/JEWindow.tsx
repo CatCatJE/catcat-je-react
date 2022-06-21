@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { createStandaloneToast } from '@chakra-ui/toast';
 import { stringify } from 'querystring';
-import styles from '../styles/danmu.module.scss';
-import '../styles/dm_a.css';
+import styles from '../styles/paper.module.scss';
+import '../styles/paper.css';
 import { catConfigItem, getNewSessionId } from '../components/CatCat';
 
 interface MuaConfig {
@@ -163,7 +163,11 @@ class JEWindow extends React.Component {
   };
 
   render() {
-    return <>JE</>;
+    return (
+      <div className={styles.paper}>
+        <div className={styles.top}>top</div>
+      </div>
+    );
   }
 }
 

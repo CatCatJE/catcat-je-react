@@ -1,0 +1,6 @@
+.paper {
+  -webkit-app-region:drag;
+  height: 100vh;
+  width: 100vw;
+}
+

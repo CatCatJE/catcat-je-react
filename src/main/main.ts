@@ -93,7 +93,7 @@ const createWindow = async () => {
     height: 650,
     useContentSize: false,
     width: 700,
-    frame: true,
+    frame: false,
     transparent: true,
     webPreferences: {
       nodeIntegration: true,
@@ -176,7 +176,7 @@ const createSettingWindow = async () => {
     },
   });
   settingWindow.setMenuBarVisibility(false);
-  settingWindow.loadURL(getHTMLPathBySearchKey('jeWindow'));
+  settingWindow.loadURL(getHTMLPathBySearchKey('settingWindow'));
 
   settingWindow.on('ready-to-show', () => {
     if (!settingWindow) {
@@ -207,9 +207,9 @@ const createSettingWindow = async () => {
  // new AppUpdater();
 };
 
-ipcMain.on('createSettingWindow', function (arg) {
+ipcMain.on('createWindow', function (arg) {
   if (jeWindow == null) {
-    createSettingWindow();
+    createWindow();
   }
 });
 ipcMain.on('dark-mode:toggle', (event, arg) => {
@@ -248,11 +248,11 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createWindow();
+    createSettingWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (jeWindow === null) createWindow();
+      if (settingWindow === null) createSettingWindow();
     });
   })
   .catch(console.log);

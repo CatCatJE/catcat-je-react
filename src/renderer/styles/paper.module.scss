@@ -1,6 +1,19 @@
+.paper {
+  -webkit-app-region: drag;
+  height: 100vh;
+  width: 100vw;
+}
+
+.top {
+  background-image: url(../assets/top_texture.png);
+  background-position:0% 20%;
+}
+
 .m_bg_top {
 
 }
+
+
 
 .root {
 
