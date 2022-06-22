@@ -1,7 +1,7 @@
 
 [![HitCount](http://hits.dwyl.com/kokolokksk/catcat-je-react.svg)](http://hits.dwyl.com/kokolokksk/catcat-je-react)
 ![](https://img.shields.io/github/stars/kokolokksk/catcat-je-react?color=green&style=flat-square)
-# JE x FFXIV
+# [JE](https://github.com/zytx121/je) x [FFXIV](https://ff.web.sdo.com/web8/index.html#/)
 
 > CatCatJE! React!
 > >The meta-electron-catcat-je-song application!
