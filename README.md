@@ -1,13 +1,13 @@
 
 [![HitCount](http://hits.dwyl.com/kokolokksk/catcat-je-react.svg)](http://hits.dwyl.com/kokolokksk/catcat-je-react)
 ![](https://img.shields.io/github/stars/kokolokksk/catcat-je-react?color=green&style=flat-square)
-# CatCatDM React
+# JE x FFXIV
 
 > CatCatJE! React!
 > >The meta-electron-catcat-je-song application!
 
 ### 说明
- justice_eternal贴吧je谱收录
+ justice_eternal贴吧je谱收录 X FFXIV
 
 - 其他说明
 >应用界面
@@ -24,7 +24,8 @@
 
 #### 待做列表
 - [] ui design
-
+- [] 设置手柄按键映射，实现JE谱弹奏进度并自动翻页。
+- [] je仓库issue自动解析 je吧自动解析 
 
 #### 下一步
 - 需求分析 ui设计 数据库设计。
