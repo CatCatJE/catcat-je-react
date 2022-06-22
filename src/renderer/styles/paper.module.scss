@@ -24,10 +24,15 @@
   position: fixed;
   text-align: left;
   left:15%;
-  color: rgb(122, 84, 21);
   line-height: 2;
   font-size: 16pt;
   font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+.scoreColorDe {
+  color: rgb(122, 84, 21)
+}
+.scoreColorSe {
+  color: rgb(172, 33, 148)
 }
 .title {
   height: 5vh;
@@ -38,6 +43,7 @@
 }
 .score {
   height: 70vh;
+  overflow: hidden;
 }
 .footer {
   height: 5vh;

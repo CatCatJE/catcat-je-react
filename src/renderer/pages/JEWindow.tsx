@@ -5,6 +5,7 @@ import { stringify } from 'querystring';
 import styles from '../styles/paper.module.scss';
 import '../styles/paper.css';
 import { catConfigItem, getNewSessionId } from '../components/CatCat';
+import issue from './issue.json';
 
 interface MuaConfig {
   roomid: number;
@@ -28,9 +29,8 @@ interface MuaConfig {
 }
 
 type StateType = {
-  comeInLastMinute: number;
-  count: number;
   muaConfig: MuaConfig;
+  scoreList: Array<any>;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -43,6 +43,8 @@ interface JEWindow {
 const { toast } = createStandaloneToast();
 class JEWindow extends React.Component {
   listHeightRef: any = '';
+
+  initScoreList: Array<any> = [];
 
   loaded: boolean = false;
 
@@ -92,8 +94,13 @@ class JEWindow extends React.Component {
       return '';
     });
     console.info(muaConfig);
+    issue.score.lines.page[0].map((p) => {
+      this.initScoreList.push(p);
+      return '';
+    });
     this.state = {
       muaConfig,
+      scoreList: this.initScoreList,
     };
     console.info(`muacofig加载完成`);
     this.load(muaConfig);
@@ -113,6 +120,8 @@ class JEWindow extends React.Component {
         isClosable: true,
       });
     });
+    // eslint-disable-next-line react/no-string-refs
+    this.refs.sp_2.style.color = 'red';
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -165,6 +174,8 @@ class JEWindow extends React.Component {
   };
 
   render() {
+    const { scoreList } = this.state;
+    let sort = 0;
     return (
       <div className={styles.paper}>
         <div className={styles.top} />
@@ -172,48 +183,42 @@ class JEWindow extends React.Component {
         <div className={styles.container}>
           <div className={styles.papers}>
             <div className={styles.title}>
-              <h1>风与约定</h1>
+              <h1>{issue.name}</h1>
             </div>
             <div className={styles.info}>
-              <i>专辑：风与约定</i>&nbsp;&nbsp;
-              <i>作词：叶尖尖</i>&nbsp;&nbsp;
-              <i>作曲：永夜蛰居</i>
+              <i>专辑：{issue.info.album}</i>&nbsp;&nbsp;
+              <i>作词：{issue.info.lyricist}</i>&nbsp;&nbsp;
+              <i>作曲：{issue.info.composer}</i>
               <br />
-              <i>编曲：永夜蛰居</i>&nbsp;&nbsp;
-              <i>歌手：多多poi / 宴宁</i>&nbsp;&nbsp;
-              <i>附注：原神</i>
+              <i>编曲：{issue.info.arranger}</i>&nbsp;&nbsp;
+              <i>歌手：{issue.info.singer}</i>&nbsp;&nbsp;
+              <i>附注：{issue.info.notes}</i>
             </div>
             <div className={styles.score}>
-              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
-              <br />
-              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;#24#22#2</span>
-              <br />
-              <span>#245#55&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;#24#22#2</span>
-              <br />
-              <span>#245#5#6#254&nbsp;&nbsp;(#6)4#2</span>
-              <br />
-              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
-              <br />
-              <span>22#2#2(#6)#2&nbsp;&nbsp;2#2#654#2</span>
-              <br />
-              <span>2#2#2#65&nbsp;&nbsp;(#6)&nbsp;&nbsp;#2#24#2</span>
-              <br />
-              <span>5#5544#254&nbsp;&nbsp;#22#2&nbsp;&nbsp;(#6)4#22#2</span>
-              <br />
-              <span>12#2&nbsp;&nbsp;44#2&nbsp;&nbsp;44#2&nbsp;&nbsp;54#2</span>
-              <br />
-              <span>(#6)#62#2&nbsp;&nbsp;(#6)#62#2</span>
-              <br />
-              <span>#245#5#6#254&nbsp;&nbsp;(#6)4#2</span>
-              <br />
-              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
-              <br />
-              <span>22#2#2(#6)#2&nbsp;&nbsp;2#2#654#2</span>
-              <br />
-              <span>2#2#2#65&nbsp;&nbsp;(#6)&nbsp;&nbsp;#2#24#2</span>
+              {scoreList.map((s) => {
+                const sList = s.split(',');
+                const sss = sList.map((ss: string) => {
+                  sort += 1;
+                  return (
+                    <span
+                      ref={`sp_${sort}`}
+                      id={`sp_${sort}`}
+                      className={styles.scoreColorDe}
+                    >
+                      {ss}
+                    </span>
+                  );
+                });
+                const jsx = <div>{sss}</div>;
+                return (
+                  <>
+                    <span>{jsx}</span>
+                  </>
+                );
+              })}
             </div>
             <div className={styles.footer}>
-              <i>记谱：列克星敦</i>
+              <i>记谱：{issue.info.notator}</i>
             </div>
           </div>
         </div>
