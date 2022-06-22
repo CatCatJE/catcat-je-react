@@ -89,10 +89,10 @@ const createWindow = async () => {
   };
 
   jeWindow = new BrowserWindow({
-    title: 'Setting Windwow',
-    height: 650,
+    title: 'paper Windwow',
+    height: 936,
     useContentSize: false,
-    width: 700,
+    width: 599,
     frame: false,
     transparent: true,
     webPreferences: {
@@ -230,7 +230,7 @@ ipcMain.handle('dark-mode:system', () => {
 ipcMain.on('setOnTop:setting', (event, arg) => {
   console.info(`setOnTop:setting ${arg[0]}`);
   if (arg) {
-    settingWindow?.setAlwaysOnTop(arg[0]);
+    jeWindow?.setAlwaysOnTop(arg[0]);
   }
 });
 /**

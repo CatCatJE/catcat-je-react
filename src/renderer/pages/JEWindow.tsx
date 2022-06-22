@@ -124,7 +124,9 @@ class JEWindow extends React.Component {
   load = (muaConfig: MuaConfig) => {
     console.info('load muaconfig');
     console.info(muaConfig);
-    console.info('init danmu data');
+    window.electron.ipcRenderer.sendMessage('setOnTop:setting', [
+      muaConfig.alwaysOnTop,
+    ]);
   };
 
   synthesizeToSpeaker = (text: string) => {
@@ -165,7 +167,57 @@ class JEWindow extends React.Component {
   render() {
     return (
       <div className={styles.paper}>
-        <div className={styles.top}>top</div>
+        <div className={styles.top} />
+        <div className={styles.leftBorder} />
+        <div className={styles.container}>
+          <div className={styles.papers}>
+            <div className={styles.title}>
+              <h1>风与约定</h1>
+            </div>
+            <div className={styles.info}>
+              <i>专辑：风与约定</i>&nbsp;&nbsp;
+              <i>作词：叶尖尖</i>&nbsp;&nbsp;
+              <i>作曲：永夜蛰居</i>
+              <br />
+              <i>编曲：永夜蛰居</i>&nbsp;&nbsp;
+              <i>歌手：多多poi / 宴宁</i>&nbsp;&nbsp;
+              <i>附注：原神</i>
+            </div>
+            <div className={styles.score}>
+              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
+              <br />
+              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;#24#22#2</span>
+              <br />
+              <span>#245#55&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;#24#22#2</span>
+              <br />
+              <span>#245#5#6#254&nbsp;&nbsp;(#6)4#2</span>
+              <br />
+              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
+              <br />
+              <span>22#2#2(#6)#2&nbsp;&nbsp;2#2#654#2</span>
+              <br />
+              <span>2#2#2#65&nbsp;&nbsp;(#6)&nbsp;&nbsp;#2#24#2</span>
+              <br />
+              <span>5#5544#254&nbsp;&nbsp;#22#2&nbsp;&nbsp;(#6)4#22#2</span>
+              <br />
+              <span>12#2&nbsp;&nbsp;44#2&nbsp;&nbsp;44#2&nbsp;&nbsp;54#2</span>
+              <br />
+              <span>(#6)#62#2&nbsp;&nbsp;(#6)#62#2</span>
+              <br />
+              <span>#245#5#6#254&nbsp;&nbsp;(#6)4#2</span>
+              <br />
+              <span>#2#2&nbsp;&nbsp;#2(#6)&nbsp;&nbsp;(#6#555)</span>
+              <br />
+              <span>22#2#2(#6)#2&nbsp;&nbsp;2#2#654#2</span>
+              <br />
+              <span>2#2#2#65&nbsp;&nbsp;(#6)&nbsp;&nbsp;#2#24#2</span>
+            </div>
+            <div className={styles.footer}>
+              <i>记谱：列克星敦</i>
+            </div>
+          </div>
+        </div>
+        <div className={styles.rightBorder} />
       </div>
     );
   }

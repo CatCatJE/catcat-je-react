@@ -100,41 +100,35 @@ const Setting = () => {
     const arr = catConfigItem.map((item) =>
       window.electron.store.get(item.name)
     );
-    // eslint-disable-next-line promise/catch-or-return
-    Promise.all(arr).then((e) => {
-      console.log(e);
-      // eslint-disable-next-line array-callback-return
-      e.map((item: any, index: number) => {
-        if (typeof item === catConfigItem[index].type) {
-          console.info(item);
-          catConfigData[catConfigItem[index].name] = item;
-        }
-      });
-      // eslint-disable-next-line promise/always-return
-      try {
-        if (!catConfigData.clientId) {
-          // eslint-disable-next-line promise/no-nesting
-          axios
-            .get('https://db.loli.monster/cat/client/generateClientId')
-            // eslint-disable-next-line promise/always-return
-            .then(function (response) {
-              // handle success
-              console.log(response);
-              catConfigData.clientId = response.data;
-              commonInputItemSave('clientId', response.data);
-            })
-            .catch(function (error: unknown) {
-              // handle error
-              console.log(error);
-            });
-        }
-        if (catConfigData.roomid) {
-          load(catConfigData.roomid);
-        }
-      } catch (e) {
-        catConfigData.clientId = 'NetworkError';
-      }
+    arr.map((item: unknown, index: number) => {
+      console.info(item);
+      catConfigData[catConfigItem[index].name] = item;
+      setCatConfigData(catConfigData);
+      return '';
     });
+    try {
+      if (!catConfigData.clientId) {
+        // eslint-disable-next-line promise/no-nesting
+        axios
+          .get('https://db.loli.monster/cat/client/generateClientId')
+          // eslint-disable-next-line promise/always-return
+          .then(function (response) {
+            // handle success
+            console.log(response);
+            catConfigData.clientId = response.data;
+            commonInputItemSave('clientId', response.data);
+          })
+          .catch(function (error: unknown) {
+            // handle error
+            console.log(error);
+          });
+      }
+      if (catConfigData.roomid) {
+        load(catConfigData.roomid);
+      }
+    } catch (e) {
+      catConfigData.clientId = 'NetworkError';
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -146,6 +140,13 @@ const Setting = () => {
       <Divider orientation="vertical" />
       <div className={styles.page}>
         <div className={styles.setting}>
+          <Divider />
+          <SettingSwitchItem
+            name="曲谱置顶"
+            v={catConfigData.alwaysOnTop}
+            c={commonSwitchItemSave}
+            skey="alwaysOnTop"
+          />
           <SettingInputItem
             name="TTS KEY"
             v={catConfigData.ttsKey || '-'}

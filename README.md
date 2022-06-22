@@ -12,6 +12,7 @@
 - 其他说明
 >应用界面
  - 这里是预览图（施工中）
+ -![](./zread/paper.jpg)
 
 - [下载地址](https://github.com/kokolokksk/catcat-je-react/releases/latest)
 ## Windows
