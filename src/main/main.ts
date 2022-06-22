@@ -22,6 +22,7 @@ import log from 'electron-log';
 import Store from 'electron-store';
 import { randomUUID } from 'crypto';
 import { getHTMLPathBySearchKey, resolveHtmlPath } from './util';
+import { stringify } from 'querystring';
 
 const store = new Store();
 
@@ -177,7 +178,43 @@ const createSettingWindow = async () => {
   });
   settingWindow.setMenuBarVisibility(false);
   settingWindow.loadURL(getHTMLPathBySearchKey('settingWindow'));
+  settingWindow.webContents.session.on(
+    'select-hid-device',
+    (event, details, callback) => {
+      event.preventDefault();
+      if (details.deviceList && details.deviceList.length > 0) {
+        callback(details.deviceList[0].deviceId);
+      }
+    }
+  );
 
+  settingWindow.webContents.session.on('hid-device-added', (event, device) => {
+    console.log('hid-device-added FIRED WITH', device);
+  });
+
+  settingWindow.webContents.session.on(
+    'hid-device-removed',
+    (event, device) => {
+      console.log('hid-device-removed FIRED WITH', device);
+    }
+  );
+  settingWindow.webContents.session.setPermissionCheckHandler(
+    (_webContents, permission, _requestingOrigin, details) => {
+      console.info(details);
+      if (permission === 'hid') {
+        return true;
+      }
+      return false;
+    }
+  );
+
+  settingWindow.webContents.session.setDevicePermissionHandler((details) => {
+    if (details.deviceType === 'hid' && details.device.productId === 2834) {
+      console.info('come in hid true');
+      return true;
+    }
+    return false;
+  });
   settingWindow.on('ready-to-show', () => {
     if (!settingWindow) {
       throw new Error('"settingWindow" is not defined');

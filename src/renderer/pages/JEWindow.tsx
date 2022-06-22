@@ -6,6 +6,7 @@ import styles from '../styles/paper.module.scss';
 import '../styles/paper.css';
 import { catConfigItem, getNewSessionId } from '../components/CatCat';
 import issue from './issue.json';
+import { Button } from '@chakra-ui/react';
 
 interface MuaConfig {
   roomid: number;
@@ -29,6 +30,7 @@ interface MuaConfig {
 }
 
 type StateType = {
+  controllers: any;
   muaConfig: MuaConfig;
   scoreList: Array<any>;
 };
@@ -62,7 +64,7 @@ class JEWindow extends React.Component {
     speechSynthesisVoiceName: string;
   };
 
-  constructor(props) {
+  constructor(props: {} | Readonly<{}>) {
     const muaConfig: MuaConfig = {
       count: 0,
       roomid: 0,
@@ -106,7 +108,7 @@ class JEWindow extends React.Component {
     this.load(muaConfig);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.info('renderer dw');
     setInterval(() => {
       console.info('try to read');
@@ -173,6 +175,23 @@ class JEWindow extends React.Component {
     }
   };
 
+  testHid = async function testHid() {
+    console.info('click');
+    const grantedDevices = await navigator.hid.getDevices();
+    let grantedDeviceList = '';
+    grantedDevices.forEach((device: { productName: any }) => {
+      grantedDeviceList += `<hr>${device.productName}</hr>`;
+    });
+    console.info(grantedDeviceList);
+    const grantedDevices2 = await navigator.hid.requestDevice({
+      filters: [],
+    });
+    grantedDeviceList = '';
+    grantedDevices2.forEach((device: { productName: any }) => {
+      console.info(device.productName);
+    });
+  };
+
   render() {
     const { scoreList } = this.state;
     let sort = 0;
@@ -181,6 +200,9 @@ class JEWindow extends React.Component {
         <div className={styles.top} />
         <div className={styles.leftBorder} />
         <div className={styles.container}>
+        <button type="button" ref="hid">
+          testHid
+        </button>
           <div className={styles.papers}>
             <div className={styles.title}>
               <h1>{issue.name}</h1>

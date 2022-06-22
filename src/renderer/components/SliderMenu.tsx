@@ -16,6 +16,7 @@ import About from '../pages/About';
 import '../styles/slider-menu.css';
 import CatCatSign from './CatCatSign';
 import MenuItem from './MenuItem';
+import { threadId } from 'worker_threads';
 
 // eslint-disable-next-line import/order
 
@@ -50,8 +51,48 @@ const SliderMenu = (prop: any | undefined) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   let love =0 ;
+  let lastBtn:Array<number>;
   const toast = useToast();
+  const testHid = async () => {
+    console.info('click');
+    const grantedDevices = await navigator.hid.getDevices();
+    const grantedDeviceList = '';
+    grantedDevices.forEach((device:any) => {
+      if(device.productId === 2834) {
+        const gamepad :Gamepad= device;
+      }
+    });
+    console.info(grantedDeviceList);
+    const gamepads = navigator.getGamepads();
+    const xb = gamepads[0];
+    if (xb !== null) {
+      let btns = xb.buttons;
+      let sort = 0;
+      btns.map( (btn : GamepadButton) => {
+        if(btn.pressed || btn.touched) {
+          if(sort === lastBtn) {
+            console.info('is same');
+          }else{
+            toast({
+              title: '',
+              description: `button[${  sort  }]press[${btn.pressed}] touched[${btn.touched}] value[${btn.value}]`,
+              status: undefined,
+              duration: 50,
+              isClosable: false,
+            })
+            lastBtn = [];
+            lastBtn.push(sort);
+          }
+
+        }
+
+        sort += 1;
+      })
+    }
+    requestAnimationFrame(testHid)
+  };
   const openLove = () => {
+    testHid();
     // eslint-disable-next-line no-plusplus
     love++;
     if(love >4){
