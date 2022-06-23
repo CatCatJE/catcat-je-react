@@ -200,9 +200,6 @@ class JEWindow extends React.Component {
         <div className={styles.top} />
         <div className={styles.leftBorder} />
         <div className={styles.container}>
-        <button type="button" ref="hid">
-          testHid
-        </button>
           <div className={styles.papers}>
             <div className={styles.title}>
               <h1>{issue.name}</h1>
