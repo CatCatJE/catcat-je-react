@@ -23,11 +23,13 @@ import Store from 'electron-store';
 import { randomUUID } from 'crypto';
 import { getHTMLPathBySearchKey, resolveHtmlPath } from './util';
 import { stringify } from 'querystring';
+import issue from '../renderer/pages/issue.json';
 
 const store = new Store();
 
 let settingWindow: BrowserWindow | null = null;
 let jeWindow: BrowserWindow | null = null;
+let starterWindow: BrowserWindow | null = null;
 
 // IPC listener
 ipcMain.on('electron-store-get', (event, val) => {
@@ -119,10 +121,12 @@ const createWindow = async () => {
       jeWindow.minimize();
     } else {
       jeWindow.show();
+      jeWindow?.webContents.send('score-data', issue);
     }
   });
 
   jeWindow.on('closed', () => {
+    globalShortcut.unregisterAll();
     jeWindow = null;
   });
 
@@ -146,6 +150,14 @@ const createWindow = async () => {
     if (settingWindow != null) {
       settingWindow.webContents.openDevTools();
     }
+  });
+  globalShortcut.register('pageUp', () => {
+    console.log('pgUp is pressed');
+    jeWindow?.webContents.send('page-up', 'pageUp');
+  });
+  globalShortcut.register('pageDown', () => {
+    console.log('pgDown is pressed');
+    jeWindow?.webContents.send('page-down', 'pageDown');
   });
 };
 
@@ -244,6 +256,64 @@ const createSettingWindow = async () => {
  // new AppUpdater();
 };
 
+const createStarterWindow = async () => {
+  if (isDebug) {
+    await installExtensions();
+  }
+
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../../assets');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
+
+  starterWindow = new BrowserWindow({
+    title: 'Starter Windwow',
+    height: 639,
+    useContentSize: false,
+    width: 970,
+    frame: false,
+    transparent: true,
+    webPreferences: {
+      webSecurity: false,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+  starterWindow.setMenuBarVisibility(false);
+  starterWindow.loadURL(getHTMLPathBySearchKey('starterWindow'));
+  starterWindow.on('ready-to-show', () => {
+    if (!starterWindow) {
+      throw new Error('"starterWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      starterWindow.minimize();
+    } else {
+      starterWindow.show();
+    }
+  });
+
+  starterWindow.on('closed', () => {
+    starterWindow = null;
+  });
+
+  // const menuBuilder = new MenuBuilder(settingWindow);
+  // menuBuilder.builjeWindowenu();
+
+  // Open urls in the user's browser
+  starterWindow.webContents.setWindowOpenHandler((edata) => {
+    shell.openExternal(edata.url);
+    return { action: 'deny' };
+  });
+
+  // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
+ // new AppUpdater();
+};
+
 ipcMain.on('createWindow', function (arg) {
   if (jeWindow == null) {
     createWindow();
@@ -285,11 +355,11 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createSettingWindow();
+    createStarterWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (settingWindow === null) createSettingWindow();
+      if (starterWindow === null) createStarterWindow();
     });
   })
   .catch(console.log);

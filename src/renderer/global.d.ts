@@ -23,6 +23,9 @@ declare global {
       onUpdateMsg: (arg0: (_event: any, data: any) => void) => void;
       mainProcessMessage: (arg0: (_event: any, data: any) => void) => void;
       msgTips: (arg0: (_event: any, data: any) => void) => void;
+      pageUp: (arg0: (_event: any, data: any) => void) => void;
+      pageDown: (arg0: (_event: any, data: any) => void) => void;
+      scoreData: (arg0: (_event: any, data: any) => void) => void;
     };
     removeLoading: () => void;
   }

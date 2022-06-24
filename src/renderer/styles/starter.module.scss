@@ -1,0 +1,52 @@
+.starter {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  -webkit-app-region: drag;
+}
+
+.topBg {
+width: 100vw;
+height: 20px;
+background-color: orange;
+}
+.btmBg {
+width: 100vw;
+height: 20px;
+background-color: orange;
+}
+.leftBg {
+  width: 20px;
+  height: calc(100vh - 40px);
+  background-color: orange;
+}
+.rightBg {
+  width: 20px;
+  height: calc(100vh - 40px);
+  background-color: orange;
+}
+.midContaniner {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: calc(100vh - 40px);
+  -webkit-app-region: drag;
+}
+.leftMenu {
+  display: flex;
+  width: 200px;
+  height: calc(100vh - 40px);
+  background-color: #f5f5f5;
+  -webkit-app-region: drag;
+}
+.rightContaniner {
+  display: flex;
+  width: calc(100vw - 200px);
+  height: calc(100vh - 40px);
+  background-color: #f5f5f5;
+  -webkit-app-region: drag;
+}

@@ -22,8 +22,7 @@
   height: 90vh;
   width: 595px;
   position: fixed;
-  text-align: left;
-  left:15%;
+  text-align: center;
   line-height: 2;
   font-size: 16pt;
   font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
@@ -35,21 +34,29 @@
   color: rgb(172, 33, 148)
 }
 .title {
+  color: rgb(122, 84, 21);
   height: 5vh;
 }
 .info {
   height: 10vh;
   font-size: 10pt;
+  color: rgb(122, 84, 21);
 }
 .score {
   height: 70vh;
   overflow: hidden;
+  text-align: left;
+  left:25%;
+  position: fixed;
 }
 .footer {
+  color: rgb(122, 84, 21);
   height: 5vh;
   position: fixed;
   bottom: 2vh;
   font-size: 10pt;
+  left: 25%;
+  text-align: left;
 }
 .leftBorder {
   display: flex;

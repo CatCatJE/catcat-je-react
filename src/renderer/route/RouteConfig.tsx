@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import JEWindow from 'renderer/pages/JEWindow';
 import Setting from 'renderer/pages/Setting';
+import Starter from 'renderer/pages/Starter';
 
 const RouteConfig = (_props: any) => {
   const location = useLocation();
@@ -12,6 +13,7 @@ const RouteConfig = (_props: any) => {
       notFind: <div />,
       jeWindow: <JEWindow />,
       settingWindow: <Setting />,
+      starterWindow: <Starter />,
     };
   };
 

@@ -65,9 +65,16 @@ const SliderMenu = (prop: any | undefined) => {
     console.info(grantedDeviceList);
     const xb = GamePadUtil.getGamePad;
     // 200ms check
-    if (xb !== null && xb.timestamp % 200 === 0) {
-      // console.info(xb);
-    }
+    const p = GamePadUtil.update();
+    p.forEach(btn => {
+      toast({
+        title: "按键按下",
+        description: `按键：${btn}`,
+        status: "info",
+        duration: 2000,
+        isClosable: true,
+      })
+    });
     requestAnimationFrame(testHid)
   };
   const openLove = () => {

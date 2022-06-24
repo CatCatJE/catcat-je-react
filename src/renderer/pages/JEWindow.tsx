@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import { Link } from '@chakra-ui/react';
 import { createStandaloneToast } from '@chakra-ui/toast';
-import { stringify } from 'querystring';
 import styles from '../styles/paper.module.scss';
 import '../styles/paper.css';
 import { catConfigItem, getNewSessionId } from '../components/CatCat';
-import issue from './issue.json';
-import { Button } from '@chakra-ui/react';
+import issueExample from './issue.json';
 
 interface MuaConfig {
   roomid: number;
@@ -33,6 +31,9 @@ type StateType = {
   controllers: any;
   muaConfig: MuaConfig;
   scoreList: Array<any>;
+  page: number;
+  pageCount: number;
+  issue: any;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -47,6 +48,8 @@ class JEWindow extends React.Component {
   listHeightRef: any = '';
 
   initScoreList: Array<any> = [];
+
+  FullScoreList: Array<any> = [];
 
   loaded: boolean = false;
 
@@ -96,13 +99,12 @@ class JEWindow extends React.Component {
       return '';
     });
     console.info(muaConfig);
-    issue.score.lines.page[0].map((p) => {
-      this.initScoreList.push(p);
-      return '';
-    });
     this.state = {
       muaConfig,
-      scoreList: this.initScoreList,
+      scoreList: [],
+      issue: issueExample,
+      page: 0,
+      pageCount: 0,
     };
     console.info(`muacofig加载完成`);
     this.load(muaConfig);
@@ -113,6 +115,13 @@ class JEWindow extends React.Component {
     setInterval(() => {
       console.info('try to read');
     }, 2000);
+    window.danmuApi.scoreData((_event: any, data: any) => {
+      console.info(data);
+      this.setState({
+        scoreList: data?.score.lines.page[0],
+        pageCount: data?.score.lines.page.length - 1,
+      });
+    });
     window.danmuApi.msgTips((_event: any, data: any) => {
       toast({
         title: '提示',
@@ -123,7 +132,26 @@ class JEWindow extends React.Component {
       });
     });
     // eslint-disable-next-line react/no-string-refs
-    this.refs.sp_2.style.color = 'red';
+    window.danmuApi.pageUp((_event: any, data: any) => {
+      const { page, issue: issue2 } = this.state;
+      console.info(data);
+      if (page > 0) {
+        this.setState({
+          scoreList: issue2.score.lines.page[page - 1],
+          page: page - 1,
+        });
+      }
+    });
+    window.danmuApi.pageDown((_event: any, data: any) => {
+      const { page, pageCount, issue: issue2 } = this.state;
+      console.info(data);
+      if (page < pageCount) {
+        this.setState({
+          scoreList: issue2.score.lines.page[page + 1],
+          page: page + 1,
+        });
+      }
+    });
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -193,7 +221,7 @@ class JEWindow extends React.Component {
   };
 
   render() {
-    const { scoreList } = this.state;
+    const { scoreList, issue } = this.state;
     let sort = 0;
     return (
       <div className={styles.paper}>
@@ -238,6 +266,17 @@ class JEWindow extends React.Component {
             </div>
             <div className={styles.footer}>
               <i>记谱：{issue.info.notator}</i>
+              <br />
+              <i>
+                来源：
+                <Link
+                  target="_blank"
+                  href={`${issue.info.source}`}
+                  rel="noreferrer"
+                >
+                  {issue.info.source}
+                </Link>
+              </i>
             </div>
           </div>
         </div>
