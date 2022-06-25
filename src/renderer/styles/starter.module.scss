@@ -34,19 +34,23 @@ background-color: orange;
   flex-direction: row;
   width: 100vw;
   height: calc(100vh - 40px);
-  -webkit-app-region: drag;
+  -webkit-app-region: no-drag;
+}
+.pagination{
+  bottom: 0;
 }
 .leftMenu {
   display: flex;
   width: 200px;
   height: calc(100vh - 40px);
   background-color: #f5f5f5;
-  -webkit-app-region: drag;
+  -webkit-app-region: no-drag;
 }
 .rightContaniner {
   display: flex;
+  flex-direction: column;
   width: calc(100vw - 200px);
   height: calc(100vh - 40px);
   background-color: #f5f5f5;
-  -webkit-app-region: drag;
+  -webkit-app-region: no-drag;
 }

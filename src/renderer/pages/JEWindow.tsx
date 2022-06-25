@@ -5,6 +5,7 @@ import styles from '../styles/paper.module.scss';
 import '../styles/paper.css';
 import { catConfigItem, getNewSessionId } from '../components/CatCat';
 import issueExample from './issue.json';
+import { Issue } from 'renderer/@types/catcat';
 
 interface MuaConfig {
   roomid: number;
@@ -54,9 +55,6 @@ class JEWindow extends React.Component {
   loaded: boolean = false;
 
   count: number = 0;
-
-  // eslint-disable-next-line global-require
-  sdk = require('microsoft-cognitiveservices-speech-sdk');
 
   speakStatus = false;
 
@@ -117,7 +115,32 @@ class JEWindow extends React.Component {
     }, 2000);
     window.danmuApi.scoreData((_event: any, data: any) => {
       console.info(data);
+      const temp: Issue = {
+        title: '',
+        info: {
+          album: '',
+          image: undefined,
+          lyricist: '',
+          composer: '',
+          arranger: '',
+          singer: '',
+          notes: '',
+          notator: '',
+          source: '',
+        },
+        score: {
+          total: 0,
+          lines: {
+            page: [['']],
+          },
+        },
+        origin: '',
+        id: 0,
+      };
+      temp.title = data.title;
+      temp.info = data.info;
       this.setState({
+        issue: temp,
         scoreList: data?.score.lines.page[0],
         pageCount: data?.score.lines.page.length - 1,
       });
@@ -168,41 +191,6 @@ class JEWindow extends React.Component {
     ]);
   };
 
-  synthesizeToSpeaker = (text: string) => {
-    const player = new this.sdk.SpeakerAudioDestination();
-    player.onAudioEnd = function (s: unknown) {
-      console.info(s);
-    };
-    const synthesizer = new this.sdk.SpeechSynthesizer(
-      this.speechConfig,
-      this.sdk.AudioConfig.fromDefaultSpeakerOutput(player)
-    );
-    console.info('come in ss');
-    console.info(synthesizer);
-    try {
-      synthesizer.speakTextAsync(
-        text,
-        (result: any) => {
-          this.speakStatus = false;
-          synthesizer.close();
-          if (result) {
-            console.log(JSON.stringify(result));
-            this.speakStatus = false;
-          }
-          // synthesizer.close()
-        },
-        (error: any) => {
-          console.log(error);
-          this.speakStatus = false;
-          synthesizer.close();
-        }
-      );
-    } catch (e) {
-      console.info(e);
-      this.speakStatus = false;
-    }
-  };
-
   testHid = async function testHid() {
     console.info('click');
     const grantedDevices = await navigator.hid.getDevices();
@@ -230,7 +218,7 @@ class JEWindow extends React.Component {
         <div className={styles.container}>
           <div className={styles.papers}>
             <div className={styles.title}>
-              <h1>{issue.name}</h1>
+              <h1>{issue.title}</h1>
             </div>
             <div className={styles.info}>
               <i>专辑：{issue.info.album}</i>&nbsp;&nbsp;
@@ -246,7 +234,9 @@ class JEWindow extends React.Component {
                 const sList = s.split(',');
                 const sss = sList.map((ss: string) => {
                   sort += 1;
-                  return (
+                  return ss === '' ? (
+                    <br />
+                  ) : (
                     <span
                       ref={`sp_${sort}`}
                       id={`sp_${sort}`}

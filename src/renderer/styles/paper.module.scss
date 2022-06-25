@@ -18,7 +18,9 @@
   left: 2px;
 }
 .papers {
-  overflow: hidden;
+  -webkit-app-region: no-drag;
+  overflow: scroll;
+  overflow-x: visible;
   height: 90vh;
   width: 595px;
   position: fixed;
@@ -34,24 +36,28 @@
   color: rgb(172, 33, 148)
 }
 .title {
+  -webkit-app-region: drag;
   color: rgb(122, 84, 21);
   height: 5vh;
 }
 .info {
+  -webkit-app-region: drag;
   height: 10vh;
   font-size: 10pt;
   color: rgb(122, 84, 21);
 }
 .score {
   height: 70vh;
-  overflow: hidden;
+  overflow: scroll;
   text-align: left;
   left:25%;
   position: fixed;
 }
 .footer {
+  -webkit-app-region: drag;
   color: rgb(122, 84, 21);
   height: 5vh;
+  width: 100vw;
   position: fixed;
   bottom: 2vh;
   font-size: 10pt;

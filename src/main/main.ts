@@ -78,7 +78,7 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
-const createWindow = async () => {
+const createWindow = async (arg: any) => {
   if (isDebug) {
     await installExtensions();
   }
@@ -121,7 +121,7 @@ const createWindow = async () => {
       jeWindow.minimize();
     } else {
       jeWindow.show();
-      jeWindow?.webContents.send('score-data', issue);
+      jeWindow?.webContents.send('score-data', arg[0]);
     }
   });
 
@@ -314,9 +314,17 @@ const createStarterWindow = async () => {
  // new AppUpdater();
 };
 
-ipcMain.on('createWindow', function (arg) {
+ipcMain.on('open-setting-window', () => {
+  if (settingWindow == null) {
+    createSettingWindow();
+  }
+});
+
+ipcMain.on('createWindow', function (event, arg) {
+  jeWindow?.close();
+  jeWindow = null;
   if (jeWindow == null) {
-    createWindow();
+    createWindow(arg);
   }
 });
 ipcMain.on('dark-mode:toggle', (event, arg) => {

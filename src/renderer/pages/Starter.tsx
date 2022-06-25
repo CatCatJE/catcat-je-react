@@ -1,6 +1,12 @@
+import { Octokit } from 'octokit';
 import React from 'react';
+import { Button } from '@chakra-ui/react';
+import { Issue } from 'renderer/@types/catcat';
 import CatCatSign from 'renderer/components/CatCatSign';
+import Pagination from 'rc-pagination';
 import styles from '../styles/starter.module.scss';
+import '../styles/pagination.css';
+import SliderNav from 'renderer/components/SliderNav';
 
 type StateType = {
   [key: string]: any;
@@ -15,25 +21,157 @@ interface Starter {
 }
 
 class Starter extends React.Component {
+  initIssueList: Array<Issue> = [];
+
+  octokit = new Octokit({
+    auth: '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',
+  });
+
   constructor(props: {} | Readonly<{}>) {
     super(props);
-    this.state = {};
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      issueList: this.initIssueList,
+      current: 1,
+    };
   }
 
+  async componentDidMount() {
+    this.getIssuseList(1);
+  }
+
+  getIssuseList = async (page: number) => {
+    const result = await this.octokit
+      .request('GET /repos/zytx121/je/issues', {
+        owner: 'OWNER',
+        repo: 'REPO',
+        direction: 'ASC',
+        per_page: 12,
+        page,
+      })
+      .then((res) => {
+        console.log(res);
+        return res;
+      });
+    console.log(result);
+    if (result.status === 200) {
+      this.initIssueList = [];
+      result.data.forEach((item: any) => {
+        const issue: Issue = {
+          title: '',
+          info: {
+            album: '',
+            image: undefined,
+            lyricist: '',
+            composer: '',
+            arranger: '',
+            singer: '',
+            notes: '',
+            notator: '',
+            source: '',
+          },
+          score: {
+            total: 0,
+            lines: {
+              page: [''],
+            },
+          },
+          origin: '',
+          id: 0,
+        };
+        issue.id = item.id;
+        issue.title = item.title;
+        issue.origin = item.body;
+        const mapLines = item.body.split('\n');
+        // eslint-disable-next-line array-callback-return
+        mapLines.map((line: string) => {
+          if (line.startsWith('- 歌手')) {
+            issue.info.singer = line.replace('- 歌手：', '').trim();
+          } else if (line.startsWith('- 作曲')) {
+            issue.info.composer = line.replace('- 作曲：', '').trim();
+          } else if (line.startsWith('- 作词')) {
+            issue.info.lyricist = line.replace('- 作词：', '').trim();
+          } else if (line.startsWith('- 编曲')) {
+            issue.info.arranger = line.replace('- 编曲：', '').trim();
+          } else if (line.startsWith('- 曲谱')) {
+            issue.info.source = line.replace('- 曲谱：', '').trim();
+          } else if (line.startsWith('- 注释')) {
+            issue.info.notes = line.replace('- 注释：', '').trim();
+          } else if (line.startsWith('- 扒谱')) {
+            issue.info.notator = line.replace('- 扒谱：', '').trim();
+          } else if (line.startsWith('- 专辑')) {
+            issue.info.album = line.replace('- 专辑：', '').trim();
+          } else if (line.startsWith('- 图片')) {
+            issue.info.image = line.replace('- 图片：', '').trim();
+          }
+        }, this);
+        const s = item.body?.split('```')[1]?.replace('```', '');
+        issue.score.total = 1;
+        issue.score.lines.page[0] = s.split('\n').map((line: string) => {
+          const tempLine = line;
+          return tempLine.trim();
+        });
+        this.initIssueList.push(issue);
+      }, this.initIssueList);
+      this.setState({
+        issueList: this.initIssueList,
+      });
+    } else {
+      console.log('error');
+    }
+  };
+
+  pageChange = (page: number) => {
+    console.log(page);
+    this.setState({
+      current: page,
+    });
+    this.getIssuseList(page);
+  };
+
+  openDetails = (issue: Issue) => {
+    console.log(issue);
+    window.electron.ipcRenderer.sendMessage('createWindow', [issue]);
+  };
+
   render() {
+    const { issueList, current } = this.state;
     return (
       <div>
         <div className={styles.starter}>
-          <div className={styles.topBg}> top bg</div>
+          <div className={styles.topBg}> </div>
           <div className={styles.midContaniner}>
-            <div className={styles.leftBg}> left bg</div>
-            <div className={styles.leftMenu}>Left Menu
+            <div className={styles.leftBg}> </div>
+            <div className={styles.leftMenu}>
+              <SliderNav />
               <CatCatSign />
             </div>
-            <div className={styles.rightContaniner}>Right Menu</div>
-            <div className={styles.rightBg}> right bg</div>
+            <div className={styles.rightContaniner}>
+              {issueList.map((item: Issue, index: number) => {
+                return (
+                  <div key={item.id}>
+                    <Button
+                      aria-hidden
+                      onClick={() => this.openDetails(item)}
+                      minWidth="200px"
+                      marginBottom={1}
+                    >
+                      <div className={styles.title}>{item.title}</div>
+                    </Button>
+                  </div>
+                );
+              }, this)}
+              <div id="pagination" className={styles.pagination}>
+                <Pagination
+                  onChange={this.pageChange}
+                  current={current}
+                  total={1000}
+                />
+              </div>
+            </div>
+            <div className={styles.rightBg}> </div>
           </div>
-          <div className={styles.btmBg}> bottom bg</div>
+          <div className={styles.btmBg}> </div>
         </div>
       </div>
     );
