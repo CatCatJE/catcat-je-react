@@ -23,9 +23,7 @@ interface Starter {
 class Starter extends React.Component {
   initIssueList: Array<Issue> = [];
 
-  octokit = new Octokit({
-    auth: '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',
-  });
+
 
   constructor(props: {} | Readonly<{}>) {
     super(props);
@@ -41,7 +39,11 @@ class Starter extends React.Component {
   }
 
   getIssuseList = async (page: number) => {
-    const result = await this.octokit
+    const gtoken = window.electron.store.get('gtoken');
+    const octokit = new Octokit({
+      auth: gtoken,
+    });
+    const result = await octokit
       .request('GET /repos/zytx121/je/issues', {
         owner: 'OWNER',
         repo: 'REPO',
@@ -73,7 +75,7 @@ class Starter extends React.Component {
           score: {
             total: 0,
             lines: {
-              page: [''],
+              page: [['']],
             },
           },
           origin: '',

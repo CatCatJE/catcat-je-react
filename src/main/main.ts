@@ -20,10 +20,7 @@ import {
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import Store from 'electron-store';
-import { randomUUID } from 'crypto';
 import { getHTMLPathBySearchKey, resolveHtmlPath } from './util';
-import { stringify } from 'querystring';
-import issue from '../renderer/pages/issue.json';
 
 const store = new Store();
 
@@ -142,15 +139,6 @@ const createWindow = async (arg: any) => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   // new AppUpdater();
-  globalShortcut.register('CommandOrControl+Shift+M', () => {
-    console.log('CommandOrControl+Shift+M is pressed');
-    if (jeWindow != null && settingWindow == null) {
-      jeWindow.webContents.openDevTools();
-    }
-    if (settingWindow != null) {
-      settingWindow.webContents.openDevTools();
-    }
-  });
   globalShortcut.register('pageUp', () => {
     console.log('pgUp is pressed');
     jeWindow?.webContents.send('page-up', 'pageUp');
@@ -312,6 +300,18 @@ const createStarterWindow = async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
  // new AppUpdater();
+  globalShortcut.register('CommandOrControl+Shift+M', () => {
+    console.log('CommandOrControl+Shift+M is pressed');
+    if (jeWindow != null) {
+      jeWindow.webContents.openDevTools();
+    }
+    if (settingWindow != null) {
+      settingWindow.webContents.openDevTools();
+    }
+    if (starterWindow != null) {
+      starterWindow.webContents.openDevTools();
+    }
+  });
 };
 
 ipcMain.on('open-setting-window', () => {

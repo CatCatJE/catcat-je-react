@@ -148,10 +148,10 @@ const Setting = () => {
             skey="alwaysOnTop"
           />
           <SettingInputItem
-            name="TTS KEY"
+            name="github token"
             v={catConfigData.ttsKey || '-'}
             c={commonInputItemSave}
-            skey="ttsKey"
+            skey="gtoken"
           />
           <Divider />
           {/* <ColorSelectContainer c={commonInputItemSave}/> */}
