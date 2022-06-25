@@ -4,8 +4,7 @@
 # [JE](https://github.com/zytx121/je) x [FFXIV](https://ff.web.sdo.com/web8/index.html#/)
 
 > CatCatJE! React!
-> >The meta-electron-catcat-je-song application!
-
+> >❤ from FFXIV
 ### 说明
  justice_eternal贴吧je谱收录 X FFXIV
 
