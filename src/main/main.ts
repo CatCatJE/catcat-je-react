@@ -163,7 +163,7 @@ const createSettingWindow = async () => {
   };
 
   settingWindow = new BrowserWindow({
-    title: 'Danmu Windwow',
+    title: '设置',
     height: 600,
     useContentSize: false,
     width: 455,
@@ -259,9 +259,9 @@ const createStarterWindow = async () => {
 
   starterWindow = new BrowserWindow({
     title: 'Starter Windwow',
-    height: 639,
+    height: 679,
     useContentSize: false,
-    width: 970,
+    width: 1022,
     frame: false,
     transparent: true,
     webPreferences: {
@@ -321,11 +321,11 @@ ipcMain.on('open-setting-window', () => {
 });
 
 ipcMain.on('createWindow', function (event, arg) {
-  jeWindow?.close();
-  jeWindow = null;
   if (jeWindow == null) {
     createWindow(arg);
-  }
+  } else {
+    jeWindow?.webContents.send('score-data', arg[0]);
+  } // 发送消息给主进程
 });
 ipcMain.on('dark-mode:toggle', (event, arg) => {
   console.info('come in dark toggle');

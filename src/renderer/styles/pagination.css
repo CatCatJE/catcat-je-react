@@ -52,28 +52,28 @@
 }
 .rc-pagination-item:focus,
 .rc-pagination-item:hover {
-  border-color: #1890ff;
+  border-color: rgb(182, 133, 73);
   transition: all 0.3s;
 }
 .rc-pagination-item:focus a,
 .rc-pagination-item:hover a {
-  color: #1890ff;
+  color: rgb(182, 133, 73);
 }
 .rc-pagination-item-active {
   font-weight: 500;
   background: #fff;
-  border-color: #1890ff;
+  border-color: rgb(182, 133, 73);
 }
 .rc-pagination-item-active a {
-  color: #1890ff;
+  color: rgb(182, 133, 73);
 }
 .rc-pagination-item-active:focus,
 .rc-pagination-item-active:hover {
-  border-color: #40a9ff;
+  border-color: rgb(182, 133, 73);
 }
 .rc-pagination-item-active:focus a,
 .rc-pagination-item-active:hover a {
-  color: #40a9ff;
+  color: rgb(182, 133, 73);
 }
 .rc-pagination-jump-prev,
 .rc-pagination-jump-next {
@@ -125,7 +125,7 @@
 }
 .rc-pagination-prev:hover button,
 .rc-pagination-next:hover button {
-  border-color: #40a9ff;
+  border-color: rgb(182, 133, 73);
 }
 .rc-pagination-prev .rc-pagination-item-link,
 .rc-pagination-next .rc-pagination-item-link {
@@ -144,8 +144,8 @@
 .rc-pagination-next:focus .rc-pagination-item-link,
 .rc-pagination-prev:hover .rc-pagination-item-link,
 .rc-pagination-next:hover .rc-pagination-item-link {
-  color: #1890ff;
-  border-color: #1890ff;
+  color: rgb(182, 133, 73);
+  border-color: rgb(182, 133, 73);
 }
 .rc-pagination-prev button:after {
   content: '‹';
@@ -231,7 +231,7 @@
   transition: border-color 0.3s;
 }
 .rc-pagination-simple .rc-pagination-simple-pager input:hover {
-  border-color: #1890ff;
+  border-color: rgb(182, 133, 73);
 }
 .rc-pagination.rc-pagination-disabled {
   cursor: not-allowed;

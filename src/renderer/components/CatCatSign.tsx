@@ -16,42 +16,42 @@ const CatCatSign = (prop: any | undefined) => {
     <div id="of" style={color}>
       <label
         style={
-          colorMode === 'light' ? { color: '#52734D' } : { color: '#735A4D' }
+          colorMode !== 'light' ? { color: '#52734D' } : { color: '#735A4D' }
         }
       >
         C
       </label>
       <label
         style={
-          colorMode === 'light' ? { color: '#91C788' } : { color: '#C7A788' }
+          colorMode !== 'light' ? { color: '#91C788' } : { color: '#C7A788' }
         }
       >
         a
       </label>
       <label
         style={
-          colorMode === 'light' ? { color: '#DDFFBC' } : { color: '#FFBA71' }
+          colorMode !== 'light' ? { color: '#DDFFBC' } : { color: '#FFBA71' }
         }
       >
         t
       </label>
       <label
         style={
-          colorMode === 'light' ? { color: '#DDFFBC' } : { color: '#FEC18F' }
+          colorMode !== 'light' ? { color: '#DDFFBC' } : { color: '#FEC18F' }
         }
       >
         C
       </label>
       <label
         style={
-          colorMode === 'light' ? { color: '#91C788' } : { color: '#E0C397' }
+          colorMode !== 'light' ? { color: '#91C788' } : { color: '#E0C397' }
         }
       >
         a
       </label>
       <label
         style={
-          colorMode === 'light' ? { color: '#52734D' } : { color: '#BD967F' }
+          colorMode !== 'light' ? { color: '#52734D' } : { color: '#BD967F' }
         }
       >
         t

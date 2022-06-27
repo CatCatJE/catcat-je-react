@@ -5,52 +5,87 @@
   width: 100vw;
   height: 100vh;
   border-radius: 4px;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 2px rgb(182, 133, 73, 0.1);
   -webkit-app-region: drag;
 }
 
 .topBg {
-width: 100vw;
-height: 20px;
-background-color: orange;
+  width: 100vw;
+  height: 40px;
+  border-width: 0 0 0.1px 0;
+  border-style: solid;
+  border-color: rgb(182, 133, 73);
+  background-image: url(../assets/border-lt.png);
+  background-position: -2.5% 25%;
+    background-size: 20%;
+  background-repeat: no-repeat;
 }
 .btmBg {
-width: 100vw;
-height: 20px;
-background-color: orange;
+  width: 100vw;
+  height: 40px;
+  border-width: 0.1px 0 0 0;
+  border-style: solid;
+  border-color: rgb(182, 133, 73);
+  background-image: url(../assets/border-rb.png);
+  background-position: 102.5% 75%;
+  background-size: 20%;
+  background-repeat: no-repeat;
 }
 .leftBg {
-  width: 20px;
-  height: calc(100vh - 40px);
-  background-color: orange;
+  width: 40px;
+  height: calc(100vh - 80px);
+  border-width: 0 0.1px 0 0;
+  border-style: solid;
+  border-color: rgb(182, 133, 73);
+  background-image: url(../assets/border-lt.png);
+  background-position: 12% -20%;
+  background-size: 500%;
+  background-repeat: no-repeat;
 }
 .rightBg {
-  width: 20px;
-  height: calc(100vh - 40px);
-  background-color: orange;
+  width: 40px;
+  height: calc(100vh - 80px);
+  border-width: 0 0 0 0.1px;
+  border-style: solid;
+  border-color: rgb(182, 133, 73);
+  background-image: url(../assets/border-rb.png);
+  background-position: 88% 120%;
+  background-size: 500%;
+  background-repeat: no-repeat;
 }
 .midContaniner {
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 80px);
   -webkit-app-region: no-drag;
 }
 .pagination{
-  bottom: 0;
+  width: calc(100vw - 200px);
+  text-align: center;
+  position: fixed;
+  bottom: 50px;
 }
 .leftMenu {
   display: flex;
   width: 200px;
-  height: calc(100vh - 40px);
-  background-color: #f5f5f5;
+  box-shadow: 2px 2px 2px rgb(182, 133, 73);
+  height: calc(100vh - 80px);
+  background-color: #ffffff;
   -webkit-app-region: no-drag;
 }
+.displayArea {
+  width: calc(100vw - 80px);
+  display: flex;
+  background-color: #ffffff;
+  -webkit-app-region: drag;
+}
 .rightContaniner {
+  margin-left: 17px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   width: calc(100vw - 200px);
-  height: calc(100vh - 40px);
-  background-color: #f5f5f5;
+  height: calc(100vh - 80px);
   -webkit-app-region: no-drag;
 }

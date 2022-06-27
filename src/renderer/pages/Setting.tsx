@@ -133,11 +133,6 @@ const Setting = () => {
   }, []);
   return (
     <Flex height="100vh">
-      <SliderMenu
-        nickname={catConfigData.nickname}
-        faceImg={catConfigData.faceImg}
-      />
-      <Divider orientation="vertical" />
       <div className={styles.page}>
         <div className={styles.setting}>
           <Divider />

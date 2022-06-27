@@ -1,12 +1,20 @@
 import { Octokit } from 'octokit';
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import { Issue } from 'renderer/@types/catcat';
 import CatCatSign from 'renderer/components/CatCatSign';
 import Pagination from 'rc-pagination';
-import styles from '../styles/starter.module.scss';
 import '../styles/pagination.css';
 import SliderNav from 'renderer/components/SliderNav';
+import JEScore from 'renderer/components/JEScore';
+import { CheckIcon, SearchIcon } from '@chakra-ui/icons';
+import styles from '../styles/starter.module.scss';
 
 type StateType = {
   [key: string]: any;
@@ -22,8 +30,6 @@ interface Starter {
 
 class Starter extends React.Component {
   initIssueList: Array<Issue> = [];
-
-
 
   constructor(props: {} | Readonly<{}>) {
     super(props);
@@ -48,7 +54,7 @@ class Starter extends React.Component {
         owner: 'OWNER',
         repo: 'REPO',
         direction: 'ASC',
-        per_page: 12,
+        per_page: 6,
         page,
       })
       .then((res) => {
@@ -103,8 +109,12 @@ class Starter extends React.Component {
             issue.info.notator = line.replace('- 扒谱：', '').trim();
           } else if (line.startsWith('- 专辑')) {
             issue.info.album = line.replace('- 专辑：', '').trim();
-          } else if (line.startsWith('- 图片')) {
-            issue.info.image = line.replace('- 图片：', '').trim();
+          } else if (line.startsWith('![image]')) {
+            issue.info.image = line
+              .replace('![image]', '')
+              .replace('(', '')
+              .replace(')', '')
+              .trim();
           }
         }, this);
         const s = item.body?.split('```')[1]?.replace('```', '');
@@ -144,31 +154,54 @@ class Starter extends React.Component {
           <div className={styles.topBg}> </div>
           <div className={styles.midContaniner}>
             <div className={styles.leftBg}> </div>
-            <div className={styles.leftMenu}>
-              <SliderNav />
-              <CatCatSign />
-            </div>
-            <div className={styles.rightContaniner}>
-              {issueList.map((item: Issue, index: number) => {
-                return (
-                  <div key={item.id}>
-                    <Button
-                      aria-hidden
-                      onClick={() => this.openDetails(item)}
-                      minWidth="200px"
-                      marginBottom={1}
-                    >
-                      <div className={styles.title}>{item.title}</div>
-                    </Button>
-                  </div>
-                );
-              }, this)}
-              <div id="pagination" className={styles.pagination}>
-                <Pagination
-                  onChange={this.pageChange}
-                  current={current}
-                  total={1000}
-                />
+            <div className={styles.displayArea}>
+              <div className={styles.leftMenu}>
+                <SliderNav />
+                <CatCatSign />
+              </div>
+              <div className={styles.rightContaniner}>
+                <InputGroup marginBottom="40px" width="calc(100vw - 260px)">
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="rgb(182, 133, 73)" />}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="type title"
+                    color="rgb(182, 133, 73)"
+                    borderColor="rgb(182, 133, 73)"
+                    focusBorderColor='rgb(182, 133, 73)'
+                  />
+                  <InputRightElement children={<CheckIcon color='rgb(182, 133, 73)' />} />
+                </InputGroup>
+                <SimpleGrid columns={3} spacing={3}>
+                  {issueList.map((item: Issue, index: number) => {
+                    return (
+                      // <div key={item.id}>
+                      //   <Button
+                      //     aria-hidden
+                      //     onClick={() => this.openDetails(item)}
+                      //     minWidth="200px"
+                      //     marginBottom={1}
+                      //   >
+                      //     <div className={styles.title}>{item.title}</div>
+                      //   </Button>
+                      // </div>
+                      <JEScore
+                        key={item.id}
+                        issue={item}
+                        onClick={() => this.openDetails(item)}
+                      />
+                    );
+                  }, this)}
+                </SimpleGrid>
+                <div id="pagination" className={styles.pagination}>
+                  <Pagination
+                    onChange={this.pageChange}
+                    current={current}
+                    total={1000}
+                  />
+                </div>
               </div>
             </div>
             <div className={styles.rightBg}> </div>

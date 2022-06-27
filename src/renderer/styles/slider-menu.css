@@ -18,6 +18,7 @@
     border-right: solid teal; */
   }
   .menu-list{
+    width: 103px;
     position: fixed;
     top: 33vh;
     height: 50vh;
@@ -26,7 +27,7 @@
   .menu_swtich{
     align-self: flex-end;
 
-    width: 18vw;
+    width: 8vw;
   }
   .photo{
     padding-bottom: 1vh;
@@ -37,14 +38,14 @@
     align-items: center;
     display: flex;
     height: 8vh;
-    width: 25vw;
+    /* width: 25vw; */
   }
   .menu-item-container:hover{
     background-color: #efefef;
   }
   .menu-item-icon{
     display: flex;
-     width: 10vw;
+     width: 5vw;
      justify-content: center;
   }
 
