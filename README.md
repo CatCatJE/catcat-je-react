@@ -6,8 +6,11 @@
 > CatCatJE! React!
 > > ❤ from ff14er
 ### 说明
- justice_eternal贴吧je谱收录 X FFXIV
+ 一起成为偶像吧！
+ 
+je谱收录 X FFXIV
 
+justice_eternal
 - 其他说明
 >应用界面
  - 这里是预览图（施工中）
