@@ -11,6 +11,8 @@
 - 其他说明
 >应用界面
  - 这里是预览图（施工中）
+
+ -![](./zread/starter.png)
  -![](./zread/paper.jpg)
 
 - [下载地址](https://github.com/kokolokksk/catcat-je-react/releases/latest)
@@ -23,17 +25,19 @@
 - 若提示  ```libgconf-2.so.4: cannot open shared object file: No such file or directory``` 则 ```apt-get update``` 再```apt-get install libgconf-2-4``` 然后执行 ```./CatCatJE```
 
 #### 待做列表
-- [ ] ui design
+- [x] ui design
 - [ ] 设置手柄按键映射，实现JE谱弹奏进度并自动翻页。
 - [x] je仓库issue自动解析 
 - [ ] je吧自动解析 
 
 #### 下一步
-- 需求分析 ui设计 数据库设计。
+- ~~ 需求分析 ui设计 数据库设计。~~
+- 收藏 本地保存
 
 ### 感谢（Thanks）
 - 施工中
 - generated from electron-react-boilerplate/electron-react-boilerplate
+- 心海表情包
 
 ### 交流
 issue 或者 神秘代码（319833969）
