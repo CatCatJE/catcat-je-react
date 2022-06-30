@@ -18,8 +18,8 @@ const JEScore = (props: { issue: Issue; onClick: () => void }) => {
       <div className={styles.info}>
         <Image
           src={issue.info.image}
-          fallbackSrc=""
-          height="calc(20vw - 32px)"
+          fallbackSrc="https://cdn.jsdelivr.net/gh/kokolokksk/catcat-je-react@je/src/renderer/assets/no-img.png"
+          height="calc(16vw - 32px)"
           width="calc(26vw - 32px)"
         />
       </div>
