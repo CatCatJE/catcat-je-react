@@ -113,7 +113,7 @@ class JEWindow extends React.Component {
     setInterval(() => {
       console.info('try to read');
     }, 2000);
-    window.danmuApi.scoreData((_event: any, data: any) => {
+    window.jeApi.scoreData((_event: any, data: any) => {
       console.info(data);
       const temp: Issue = {
         title: '',
@@ -145,7 +145,7 @@ class JEWindow extends React.Component {
         pageCount: data?.score.lines.page.length - 1,
       });
     });
-    window.danmuApi.msgTips((_event: any, data: any) => {
+    window.jeApi.msgTips((_event: any, data: any) => {
       toast({
         title: '提示',
         description: data,
@@ -155,7 +155,7 @@ class JEWindow extends React.Component {
       });
     });
     // eslint-disable-next-line react/no-string-refs
-    window.danmuApi.pageUp((_event: any, data: any) => {
+    window.jeApi.pageUp((_event: any, data: any) => {
       const { page, issue: issue2 } = this.state;
       console.info(data);
       if (page > 0) {
@@ -165,7 +165,7 @@ class JEWindow extends React.Component {
         });
       }
     });
-    window.danmuApi.pageDown((_event: any, data: any) => {
+    window.jeApi.pageDown((_event: any, data: any) => {
       const { page, pageCount, issue: issue2 } = this.state;
       console.info(data);
       if (page < pageCount) {
@@ -230,7 +230,7 @@ class JEWindow extends React.Component {
               <i>附注：{issue.info.notes}</i>
             </div>
             <div className={styles.score}>
-              {scoreList.map((s) => {
+              {scoreList?.map((s) => {
                 const sList = s.split(',');
                 const sss = sList.map((ss: string) => {
                   sort += 1;

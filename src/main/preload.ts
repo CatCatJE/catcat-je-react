@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import path from 'path';
 import { useLoading } from '../preload/loading';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -41,7 +42,7 @@ contextBridge.exposeInMainWorld('electron', {
 // --------- Expose some API to the Renderer process. ---------
 contextBridge.exposeInMainWorld('fs', fs);
 contextBridge.exposeInMainWorld('removeLoading', removeLoading);
-contextBridge.exposeInMainWorld('danmuApi', {
+contextBridge.exposeInMainWorld('jeApi', {
   mainProcessMessage: (
     callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void
   ) => ipcRenderer.on('main-process-message', callback),

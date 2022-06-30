@@ -18,7 +18,7 @@ declare global {
     darkMode: {
       toggle: (arg0: (_event: any, args: unknown[]) => void) => boolean;
     };
-    danmuApi: {
+    jeApi: {
       onUpdateOnliner: (arg0: (_event: any, value: any) => void) => void;
       onUpdateMsg: (arg0: (_event: any, data: any) => void) => void;
       mainProcessMessage: (arg0: (_event: any, data: any) => void) => void;
@@ -26,6 +26,7 @@ declare global {
       pageUp: (arg0: (_event: any, data: any) => void) => void;
       pageDown: (arg0: (_event: any, data: any) => void) => void;
       scoreData: (arg0: (_event: any, data: any) => void) => void;
+      startDrop: (arg0: string) => void;
     };
     removeLoading: () => void;
   }

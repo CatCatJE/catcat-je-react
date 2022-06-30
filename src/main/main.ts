@@ -21,6 +21,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import Store from 'electron-store';
 import { getHTMLPathBySearchKey, resolveHtmlPath } from './util';
+import { icons } from 'react-icons';
 
 const store = new Store();
 

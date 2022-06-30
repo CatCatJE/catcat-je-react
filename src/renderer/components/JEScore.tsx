@@ -18,7 +18,7 @@ const JEScore = (props: { issue: Issue; onClick: () => void }) => {
       <div className={styles.info}>
         <Image
           src={issue.info.image}
-          fallbackSrc="https://via.placeholder.com/300x400?text=No+Image"
+          fallbackSrc=""
           height="calc(20vw - 32px)"
           width="calc(26vw - 32px)"
         />
