@@ -34,6 +34,15 @@ class Starter extends React.Component {
 
   q = '';
 
+  sourceList = [
+    { owner: 'zytx121', repo: 'je' },
+    { owner: 'CatCatJE', repo: 'ffxiv' },
+  ];
+
+  owner = this.sourceList[1].owner;
+
+  repo = this.sourceList[1].repo;
+
   initTotalCount = 0;
 
   constructor(props: {} | Readonly<{}>) {
@@ -48,14 +57,17 @@ class Starter extends React.Component {
   }
 
   async componentDidMount() {
+    const r = Math.random() * 10;
+    this.owner = this.sourceList[r > 5 ? 0 : 1].owner;
+    this.repo = this.sourceList[r > 5 ? 0 : 1].repo;
     const gtoken = window.electron.store.get('gtoken');
     const octokit = new Octokit({
       auth: gtoken,
     });
     const repo = await octokit
-      .request('GET /repos/zytx121/je', {
-        owner: 'zytx121',
-        repo: 'je',
+      .request(`GET /repos/${this.owner}/${this.repo}`, {
+        owner: this.owner,
+        repo: this.repo,
       })
       .then((res) => {
         return res;
@@ -81,13 +93,13 @@ class Starter extends React.Component {
     if (this.q !== '') {
       result = await octokit
         .request('GET /search/issues', {
-          owner: 'zytx121',
-          repo: 'je',
+          owner: this.owner,
+          repo: this.repo,
           direction: 'ASC',
           per_page: 6,
           state: 'open',
           page,
-          q: `is:issue is:open ${this.q} repo:zytx121/je`,
+          q: `is:issue is:open ${this.q} repo:${this.owner}/${this.repo}`,
         })
         .then((res) => {
           return res;
@@ -135,8 +147,12 @@ class Starter extends React.Component {
               issue.info.source = line.replace('- 曲谱：', '').trim();
             } else if (line.startsWith('- 注释')) {
               issue.info.notes = line.replace('- 注释：', '').trim();
-            } else if (line.startsWith('- 扒谱')) {
-              issue.info.notator = line.replace('- 扒谱：', '').trim();
+            } else if (line.startsWith('来源')) {
+              issue.info.source = line.replace('来源：', '').trim();
+            } else if (line.startsWith('扒谱')) {
+              issue.info.notator = line.replace('扒谱：', '').trim();
+            } else if (line.startsWith('记谱')) {
+              issue.info.notator = line.replace('记谱：', '').trim();
             } else if (line.startsWith('- 专辑')) {
               issue.info.album = line.replace('- 专辑：', '').trim();
             } else if (line.startsWith('![image]')) {
@@ -164,7 +180,7 @@ class Starter extends React.Component {
       }
     } else {
       result = await octokit
-        .request('GET /repos/zytx121/je/issues', {
+        .request(`GET /repos/${this.owner}/${this.repo}/issues`, {
           owner: 'OWNER',
           repo: 'REPO',
           direction: 'ASC',
@@ -220,8 +236,12 @@ class Starter extends React.Component {
               issue.info.source = line.replace('- 曲谱：', '').trim();
             } else if (line.startsWith('- 注释')) {
               issue.info.notes = line.replace('- 注释：', '').trim();
-            } else if (line.startsWith('- 扒谱')) {
-              issue.info.notator = line.replace('- 扒谱：', '').trim();
+            } else if (line.startsWith('扒谱')) {
+              issue.info.notator = line.replace('扒谱：', '').trim();
+            } else if (line.startsWith('记谱')) {
+              issue.info.notator = line.replace('记谱：', '').trim();
+            } else if (line.startsWith('来源')) {
+              issue.info.source = line.replace('来源：', '').trim();
             } else if (line.startsWith('- 专辑')) {
               issue.info.album = line.replace('- 专辑：', '').trim();
             } else if (line.startsWith('![image]')) {
